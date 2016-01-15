@@ -1,12 +1,32 @@
 apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'jetty'
 
-sourceCompatibility = 1.5
-version = '1.0'
+sourceCompatibility = 1.8
+group = 'xtrac-framework'
+version = '1.0-SNAPSHOT'
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
+    compile group:'xtrac-framework', name: 'framework', version: '1.0-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    providedCompile 'javax.servlet:servlet-api:2.5',
+            'javax.servlet.jsp:jsp-api:2.1'
+    runtime 'javax.servlet:jstl:1.1.2',
+            'taglibs:standard:1.1.2'
+}
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        Plugin(org.gradle.api.publish.maven.MavenPublication) {
+            from components.java
+            artifactId 'portfolio-management'
+        }
+    }
 }
